@@ -19,6 +19,13 @@
 <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
+      .center {
+        margin: 0;
+        position: absolute;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+      }
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -92,36 +99,83 @@
 
   <main>
     <!-- Game link part -->
-    <h1 ><a href="game.html" class="nav-link px-2 link-secondary" >Game</a></h1>
+    <h1 ><a href="#game" class="nav-link px-2 link-secondary" >Game</a></h1>
     <i class="fs-5 col-md-8">Here you can challengue your peers into ranking matches or just enjoy your time playing public matches.</i>
     <div class="tabs">
       <ul class="tabs-list">
-        <l1 ><a href="ranked.html" class="nav-link px-2 link-secondary" > RANKED</a></l1>
+        <l1 ><a href="#ranked_tab" class="nav-link px-2 link-secondary" > RANKED</a></l1>
         <div class="tabs">
           <ul class="tabs-list">
             <b class="fs-5 col-md-8">Create an invitation.</b>
-            <l1 ><a href="#GO_TO_PYTHON" class="nav-link px-2 link-secondary" >1 VS 1 </a></l1>
-            <l1 ><a href="game.html" class="nav-link px-2 link-secondary" > 2 VS 2</a></l1>
+            <l1 ><a href="p_database.html" class="nav-link px-2 link-secondary" >1 VS 1 </a></l1>
+            <l1 ><a href="#2vs2" class="nav-link px-2 link-secondary" > 2 VS 2</a></l1>
     
           </ul>
-        <l1 ><a href="game.html" class="nav-link px-2 link-secondary" > PUBLIC</a></l1>
+        <l1 ><a href="#public" class="nav-link px-2 link-secondary" > PUBLIC</a></l1>
 
       </ul>
     
     </div>
 
-    <h1><a href="game.html" class="nav-link px-2 link-secondary">Ranking</a></h1>
+    <h1><a href="#ranking" class="nav-link px-2 link-secondary">Ranking</a></h1>
     <i class="fs-5 col-md-8">Check where are you in the ranking, points and who is the tier list.</i>
 
     
-    <h1><a href="schedule.html" class="nav-link px-2 link-secondary">Schedule</a></h1>
-    <i class="fs-5 col-md-8">With one lick you will be able to see the calendar to check if the table tennis is occupied or free to play.</i>
+    <h1><a href="p_database.html" class="nav-link px-2 link-secondary">Schedule</a></h1>
+    <i class="fs-5 col-md-8">With one click you will be able to see the calendar to check if the table tennis is occupied or free to play.</i>
 
     <h1><a href="matches.html" class="nav-link px-2 link-secondary">Matches</a></h1>
     <i class="fs-5 col-md-8">See who is playing in the ranking matches, get a look in your future opponents.</i>
+
+
+
+    <!--  -->
+    <!--  -->
+    <h2 style="text-align:center" >Calculate your points </h2>
+
+    <p style="text-align:center" id="demo">Which could be your score : </p>
+
+    <button class="center" type="button" onclick="myFunction()">Let's check it</button>
+
+    <script>
+    function myFunction() {
+      var r1 = prompt("Enter the current ranking score for Player 1");
+      var r2 = prompt("Enter the current ranking score for Player 2");
+      var outcome = prompt("Who won?");
+      var r1final;
+      var r2final;
+      var K = 50;
+      var P = 400;
+      var s1 = 0;
+      var s2 = 0;
+
+      while (outcome != 1 && outcome != 2)
+      outcome = prompt("Please type 1 if Player 1 won, 2 if Player 2 won");
+      if (outcome == 1){
+          s1 = 1;
+          s2 = 0;}
+      else if (outcome == 2){
+          s1 = 0;
+          s2 = 1;}
+
+      function ranking(r1, r2, s1, s2)
+      {
+      r1 = parseInt(r1);
+      r2 = parseInt(r2);
+      r1final = r1 + K*(s1-(1 / (1 + 10**((r2-r1)/P))));
+      r2final = r2 + K*(s2-(1 / (1 + 10**((r1-r2)/P))));
+      return {r1final, r2final};
+      }
+      const ret = ranking(r1, r2, s1, s2);
+      alert("Player 1 score went from " + r1 + "-to->" + Math.round(ret.r1final) +"\n" +
+            "Player 2 score went from " + r2 + "-to->" + Math.round(ret.r2final) );
+
+    }
+    </script>
+
     
     <div class="mb-5">
-      <a href="../examples/" class="btn btn-primary btn-lg px-4">Give a support in Patreon</a>
+      <a href="https://www.paypal.com/de/home" class="btn btn-primary btn-lg px-4">Give a support in Patreon</a>
     </div>
 
     <hr class="col-3 col-md-2 mb-5">
